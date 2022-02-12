@@ -1,5 +1,4 @@
 #include <iostream>
-#include "miniaudio.h"
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -10,6 +9,7 @@ extern "C" {
 }
 
 #define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio.h"
 
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount) {
     AVAudioFifo* fifo = reinterpret_cast<AVAudioFifo*>(pDevice->pUserData);
@@ -88,7 +88,7 @@ int main(int, char**) {
     //3. play back audio
     ma_device_config deviceConfig;
     ma_device device;
-/*
+
     deviceConfig = ma_device_config_init(ma_device_type_playback);
     deviceConfig.playback.format = ma_format_f32;
     deviceConfig.playback.channels = stream->codecpar->channels;
@@ -98,7 +98,7 @@ int main(int, char**) {
 
     avformat_close_input(&format_ctx);
     av_frame_free(&frame);
-    av_packet_free(&packet);
+    av_packet_free(&packet); 
     avcodec_free_context(&codec_ctx);
     swr_free(&resampler);
 
@@ -115,7 +115,7 @@ int main(int, char**) {
     }
 
     ma_device_uninit(&device);
-*/
+
    
     av_audio_fifo_free(fifo);
     getchar();
